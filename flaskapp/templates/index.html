@@ -1,0 +1,29 @@
+
+{% extends 'base.html' %}
+
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+{% for post in posts %}
+
+  <a href="{{ url_for('render_blog', blog_id=post.id) }}" class="link-underline link-underline-opacity-0">
+
+    <div class="card mb-3">
+        <div class="row g-0">
+          <div class="col">
+            <div class="card-body">
+              <h3 class="card-title">{{ post.title }}</h3>
+              <p class="card-text">{{ post.description }}</p>
+              <p class="card-text"><small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d: %I:%M%p') }} - {{ post.authors }}</small></p>
+            </div>
+          </div>
+        </div>
+    </div>
+
+  </a>
+
+{% endfor %}
+
+{% endblock %}
