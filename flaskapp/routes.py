@@ -88,8 +88,8 @@ def create_blog():
 @app.route("/register", methods=['GET', 'POST'])
 @login_required
 def register():
-    # if current_user.is_authenticated and (current_user.account_type == "Owner" or current_user.account_type == "Administrator"):
-    if True:
+    if current_user.is_authenticated:
+    # if True:
         form = RegistrationForm()
         if form.validate_on_submit():
             hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
