@@ -122,3 +122,12 @@ def delete_user(user_id):
     page = request.args.get('page', 1, type=int)
     posts = Post.query.order_by(Post.date_posted.desc()).paginate(page=page, per_page=5)
     return render_template('index.html', title='Home', posts=posts)
+
+@app.route("/blog/<int:blog_id>/delete", methods=['POST'])
+@login_required
+def delete_blog(blog_id):
+    post = Post.query.get_or_404(blog_id)
+    db.session.delete(post)
+    db.session.commit()
+    flash('Post has been deleted!', 'success mt-4')
+    return redirect(url_for('render_index'))

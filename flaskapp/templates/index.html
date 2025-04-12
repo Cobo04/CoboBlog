@@ -8,13 +8,32 @@
 
 {% for post in posts %}
 
-  <a href="{{ url_for('render_blog', blog_id=post.id) }}" class="link-underline link-underline-opacity-0">
+  <a href="{{ url_for('render_blog', blog_id=post.id) }}" class="link-underline link-underline-opacity-0" style="z-index: -1">
 
     <div class="card mb-3">
         <div class="row g-0">
           <div class="col">
             <div class="card-body">
-              <h3 class="card-title">{{ post.title }}</h3>
+              <h3 class="card-title">
+                {% if post.blog_type == 'Proof' %}
+                  <i class="bi bi-calculator"></i>
+                {% elif post.blog_type == 'Writing' %}
+                  <i class="bi bi-pencil-square"></i>
+                {% elif post.blog_type == 'Personal' %}
+                  <i class="bi bi-person-arms-up"></i>
+                {% elif post.blog_type == 'Other' %}
+                  <i class="bi bi-substack"></i>
+                {% endif %}
+
+                {{ post.title }}
+
+                {% if current_user.is_authenticated %}
+                  <form action="{{ url_for('delete_blog', blog_id=post.id) }}" method="POST">
+                    <input class="btn btn-danger" type="submit" value="Delete">
+                  </form>
+                {% endif %}
+
+              </h3>
               <p class="card-text">{{ post.description }}</p>
               <p class="card-text"><small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d: %I:%M%p') }} - {{ post.authors }}</small></p>
             </div>
@@ -23,6 +42,7 @@
     </div>
 
   </a>
+
 
 {% endfor %}
 

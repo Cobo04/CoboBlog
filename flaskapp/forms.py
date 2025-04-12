@@ -30,6 +30,6 @@ class PostForm(FlaskForm):
     content = TextAreaField('Content', validators=[DataRequired(), Length(min=1, max=1000)])
     description = TextAreaField('Description', validators=[DataRequired(), Length(min=1, max=1000)])
     authors = StringField('Authors', validators=[DataRequired(), Length(min=1, max=100)])
-    blog_type = SelectField('Account Type', validators=[DataRequired()], 
+    blog_type = SelectField('Post Type', validators=[DataRequired()], 
                                choices=['Proof', 'Writing', 'Personal', 'Other'])
     submit = SubmitField('Post')
